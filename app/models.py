@@ -3,6 +3,9 @@ from enum import Enum
 
 class OrderStatus(str, Enum):
     PENDENTE = "PENDENTE"
+    PROCESSANDO = "PROCESSANDO"
+    ENVIADO = "ENVIADO"
+    ENTREGUE = "ENTREGUE"
 
 class OrderCreate(BaseModel):
     client_name: str = Field(..., min_length=1, description="Nome do cliente")

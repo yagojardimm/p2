@@ -13,12 +13,14 @@ class RabbitMQPublisher:
         # Garante que a fila existe
         await self.channel.declare_queue(settings.RABBITMQ_QUEUE, durable=True)
 
-    async def publish_order_created(self, order_id: str):
+    async def publish_order_created(self, order_id: str, client_name: str, product_name: str):
         if not self.channel:
             raise RuntimeError("RabbitMQ channel is not initialized")
         
         message_data = {
             "id": order_id,
+            "client_name": client_name,
+            "product_name": product_name,
             "status": "PENDENTE"
         }
         

@@ -96,7 +96,11 @@ async def criar_pedido(order_in: OrderCreate):
         await collection.insert_one(order_doc)
 
         # publica no rabbit e no kafka
-        await rabbitmq_publisher.publish_order_created(order_id)
+        await rabbitmq_publisher.publish_order_created(
+            order_id=order_id,
+            client_name=order_in.client_name,
+            product_name=order_in.product_name
+        )
 
         order_data = {
             "id": order_id,

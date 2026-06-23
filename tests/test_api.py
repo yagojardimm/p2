@@ -51,7 +51,11 @@ async def test_criar_pedido(mock_external_services):
 
     # checa se publicou no rabbitmq
     mock_rmq = mock_external_services["rabbitmq"]
-    mock_rmq.publish_order_created.assert_called_once_with(data["id"])
+    mock_rmq.publish_order_created.assert_called_once_with(
+        order_id=data["id"],
+        client_name=data["client_name"],
+        product_name=data["product_name"]
+    )
 
     # checa se publicou no kafka
     mock_kafka = mock_external_services["kafka"]
